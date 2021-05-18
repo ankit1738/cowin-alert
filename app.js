@@ -4,8 +4,13 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cron from "node-cron";
 import { router as registerRoute } from "./register.js";
-import { getAllSubscribers } from "./service/sendEmail.js";
+import { getAllSubscribers } from "./service/checkAvailability.js";
 import { User } from "./models/user.js";
+
+/** FOR DECLARING __dirname */
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();
 const app = express();
@@ -16,7 +21,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(express.static("public"));
 app.use("/register", registerRoute);
+
+app.set("view engine", "ejs");
 
 const MONGO_URI = `mongodb+srv://ankit:${process.env.MONGODB_PASS}@cowinalert.zffaf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 /** MONGODB CONFIG */
@@ -35,13 +43,15 @@ db.once("open", function () {
 
 /** ROUTES */
 app.get("/", (req, res) => {
-    res.send({ msg: "Running" });
+    res.render("index");
 });
 
 app.post("/unsubscribe", async (req, res) => {
+    console.log(req.body);
     let user = await User.findOne({ email: req.body.email });
     if (user) {
         user.isSubscribed = false;
+        user.pincodes = [];
         user.save();
         res.send({ msg: "Unsubsribed sucessfully" });
     } else {
@@ -49,11 +59,7 @@ app.post("/unsubscribe", async (req, res) => {
     }
 });
 
-// app.post("/register", async (req, res) => {
-
-// });
-
-cron.schedule("*/5 * * * *", () => {
+cron.schedule("*/1 * * * *", () => {
     console.log("running task every 5 minutes");
     getAllSubscribers();
 });

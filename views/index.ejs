@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cowin Alert</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+            crossorigin="anonymous"
+        />
+    </head>
+    <style>
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+        }
+        .register-form {
+            width: 50%;
+        }
+    </style>
+    <body>
+        <div class="container-sm main">
+            <form class="register-form" id="register-form">
+                <div class="mb-3"><h3>Register</h3></div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" />
+                </div>
+                <div class="mb-3">
+                    <label for="pincode" class="form-label">Pincode</label>
+                    <input type="text" name="pincode" class="form-control" id="pincode" />
+                </div>
+                <button type="submit" class="btn btn-primary" id="register-submit">Submit</button>
+            </form>
+        </div>
+        <div class="container-sm main">
+            <form class="register-form" id="unsub-form">
+                <div class="mb-3"><h3>Unsubscribe</h3></div>
+                <div class="mb-3">
+                    <label for="unsub-email" class="form-label">Email address</label>
+                    <input
+                        type="email"
+                        name="unsub-email"
+                        class="form-control"
+                        id="unsub-email"
+                        aria-describedby="emailHelp"
+                    />
+                </div>
+                <button type="submit" class="btn btn-primary" id="unsub-submit">Submit</button>
+            </form>
+        </div>
+    </body>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"
+    ></script>
+    <script>
+        document.querySelector("#register-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            let email = document.querySelector("#email").value;
+            let pincode = document.querySelector("#pincode").value;
+            if (!email) {
+                alert("Enter email");
+                return false;
+            }
+            if (!pincode) {
+                alert("Enter pincode");
+                return false;
+            }
+            if (pincode && pincode.length != 6) {
+                alert("Enter a valid pincode");
+                return false;
+            }
+            let response = await fetch("http://localhost:3000/register", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    pincode: pincode,
+                    district: null,
+                    lastEmail: null,
+                    isSubscribed: true,
+                    isPincode: true,
+                    isDistrict: false,
+                }),
+            });
+            let data = await response.json();
+            alert(data.msg);
+            location.reload();
+        });
+
+        document.querySelector("#unsub-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            let email = document.querySelector("#unsub-email").value;
+            if (!email) {
+                alert("Enter email to unsubscribe");
+                return false;
+            }
+            let response = await fetch("http://localhost:3000/unsubscribe", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                }),
+            });
+            let data = await response.json();
+            alert(data.msg);
+            location.reload();
+        });
+    </script>
+</html>

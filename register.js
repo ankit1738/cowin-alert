@@ -7,9 +7,9 @@ router.post("/", async (req, res) => {
     let existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
         if (req.body.isPincode) {
-            existingUser.pincodes.push(req.body.pincode);
+            existingUser.pincodes.push({ pin: req.body.pincode, lastEmail: null });
         } else {
-            existingUser.districts.push(req.body.district);
+            existingUser.districts.push({ pin: req.body.district, lastEmail: null });
         }
         existingUser.lastEmail = null;
         existingUser.isSubscribed = true;
@@ -19,10 +19,10 @@ router.post("/", async (req, res) => {
         let user = new User();
         user.email = req.body.email;
         if (req.body.isPincode && req.body.pincode) {
-            user.pincodes.push(req.body.pincode);
+            user.pincodes.push({ pin: req.body.pincode, lastEmail: null });
         }
         if (req.body.isDistrict && req.body.district) {
-            user.districts.push(req.body.district);
+            user.districts.push({ pin: req.body.district, lastEmail: null });
         }
         user.lastEmail = null;
         user.isSubscribed = true;
