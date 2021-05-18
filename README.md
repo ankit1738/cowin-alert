@@ -1,6 +1,6 @@
 This nodejs server runs a cron job that hits the cowin API every 5 min to check for the availability of vaccines and send an email alert to the subscribed users.
 
-NOTE: This project dosent have a frontend. Altough, To make things easy and so that you dont have to use porstman every time, I've made a homepage with forms to register and unsubscribe which is at root url ("/")
+NOTE: This project dosen't have a frontend. Altough, To make things easy and so that you dont have to use postman every time, I've made a homepage with forms to register and unsubscribe which is at root url ("/")
 
 To run the application you'll have to use your own free tier gmail smtp service and mongodb database.
 
