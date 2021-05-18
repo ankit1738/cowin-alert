@@ -27,7 +27,9 @@ const getAvailability = async (pincode, date, user) => {
         for (let session of response.data.sessions) {
             if (session.min_age_limit === 45) {
                 console.log(`for user ${user.email} at pincode ${pincode.pin}`);
-                console.log(`${session.available_capacity} Vaccine available at ${session.name} on ${session.date}`);
+                console.log(
+                    `${session.available_capacity} ${session.vaccine} Vaccine available at ${session.name} on ${session.date}`
+                );
                 let message = `
                         <p>${session.available_capacity} ${session.vaccine} Vaccines Available for pin <b>${pincode.pin} at ${session.name} on ${session.date}</b></p>
                         <p><b>Address:</b>${session.address}</p>
