@@ -10,7 +10,7 @@ To generate gmail smtp oauth credentials follow this tutorial - https://dev.to/c
 
 Add the following env variables in .env file in root folder.
 
-• EMAIL=<email>
+• EMAIL=<gmail>
   
 • REFRESH_TOKEN=<google_oauth_refresh_token>
   
