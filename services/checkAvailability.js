@@ -25,7 +25,7 @@ const getAvailability = async (pincode, date, user) => {
     let response = await axios.get(`${BASE_URL}pincode=${pincode.pin}&date=${date}`);
     if (response.data.sessions.length > 0) {
         for (let session of response.data.sessions) {
-            if (session.min_age_limit === 45) {
+            if (session.min_age_limit === 18) {
                 console.log(`for user ${user.email} at pincode ${pincode.pin}`);
                 console.log(
                     `${session.available_capacity} ${session.vaccine} Vaccine available at ${session.name} on ${session.date}`
