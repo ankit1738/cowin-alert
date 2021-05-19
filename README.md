@@ -4,7 +4,7 @@ NOTE: This project dosen't have a frontend. Altough, To make things easy and so 
 
 To run the application you'll have to use your own free tier gmail smtp service and mongodb database.
 
-To create a mongodb database - use MongoDB Atlas's free tier. Follow this tutorial -> https://www.freecodecamp.org/news/get-started-with-mongodb-atlas/ 
+To create a mongodb database, you can use MongoDB Atlas's free tier. Follow this tutorial -> https://www.freecodecamp.org/news/get-started-with-mongodb-atlas/ 
   
 To generate gmail smtp oauth credentials follow this tutorial - https://dev.to/chandrapantachhetri/sending-emails-securely-using-node-js-nodemailer-smtp-gmail-and-oauth2-g3a
 
