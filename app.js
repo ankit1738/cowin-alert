@@ -3,8 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cron from "node-cron";
-import { router as registerRoute } from "./register.js";
-import { getAllSubscribers } from "./service/checkAvailability.js";
+import { router as registerRoute } from "./services/register.js";
+import { getAllSubscribers } from "./services/checkAvailability.js";
 import { User } from "./models/user.js";
 
 /** FOR DECLARING __dirname */

@@ -43,6 +43,7 @@ const getAvailability = async (pincode, date, user) => {
                     user.pincodes[index].lastEmail = moment();
                     user.save();
                 } else {
+                    /**clear the date in the db or change it to an old date */
                     console.log("Vaccine found but email prevented");
                 }
             }
